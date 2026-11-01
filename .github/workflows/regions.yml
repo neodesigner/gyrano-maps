@@ -1,0 +1,50 @@
+name: Region boxes (Overpass)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - regions/*.overpass
+      - .github/workflows/regions.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  regions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Query Overpass
+        run: |
+          mkdir -p /tmp/out
+          for q in regions/*.overpass; do
+            c=$(basename "$q" .overpass)
+            curl -sS --fail --retry 3 --retry-delay 20 -A "gyrano-maps (https://github.com/neodesigner/gyrano-maps)" \
+              --data-urlencode "data@$q" https://overpass-api.de/api/interpreter -o "/tmp/$c.raw.json"
+            python3 - "$c" <<'PY'
+          import json, sys
+          c = sys.argv[1]
+          raw = json.load(open(f"/tmp/{c}.raw.json"))
+          out = []
+          for e in raw.get("elements", []):
+              t, b = e.get("tags", {}), e.get("bounds")
+              if not b:
+                  continue
+              out.append({"rel": e["id"], "level": t.get("admin_level"), "name": t.get("name"),
+                          "name_en": t.get("name:en"), "ref": t.get("ref") or t.get("dicofre") or t.get("ISO3166-2"),
+                          "bbox": [round(b["minlon"], 4), round(b["minlat"], 4), round(b["maxlon"], 4), round(b["maxlat"], 4)]})
+          out.sort(key=lambda r: (r["level"] or "", r["name"] or ""))
+          json.dump(out, open(f"/tmp/out/{c}.json", "w"), indent=1, ensure_ascii=False)
+          print(f"{c}: {len(out)} areas")
+          for r in out: print(r)
+          PY
+          done
+      - name: Publish to the regions branch
+        run: |
+          cd /tmp/out
+          git init -q -b regions && git add -A
+          git -c user.name=github-actions -c user.email=github-actions@users.noreply.github.com commit -qm "Regions ${{ github.sha }}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" regions
