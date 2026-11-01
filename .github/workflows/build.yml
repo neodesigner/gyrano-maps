@@ -1,0 +1,77 @@
+name: Build offline areas
+
+on:
+  schedule:
+    - cron: '17 4 3 * *'   # monthly, 3rd at 04:17 UTC
+  workflow_dispatch:
+    inputs:
+      build:
+        description: 'Protomaps build (YYYYMMDD); blank = newest'
+        required: false
+        default: ''
+  push:
+    branches: [main]
+    paths:
+      - areas.json
+      - build.py
+      - .github/workflows/build.yml
+
+permissions:
+  contents: write    # build-log branch
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pmtiles CLI
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/pmt && cd /tmp/pmt
+          gh release download --repo protomaps/go-pmtiles --pattern '*_Linux_x86_64.tar.gz' --output pmtiles.tgz
+          tar -xzf pmtiles.tgz
+          sudo install "$(find . -name pmtiles -type f | head -1)" /usr/local/bin/pmtiles
+          pmtiles version
+
+      - name: Extract areas
+        env:
+          BUILD: ${{ inputs.build }}
+        run: python3 build.py 2>&1 | tee build.log
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
+
+      - name: Publish build log
+        if: always()
+        env:
+          PAGE_URL: ${{ steps.deploy.outputs.page_url }}
+          OUTCOME: ${{ job.status }}
+        run: |
+          mkdir -p /tmp/log
+          cp build.log /tmp/log/ 2>/dev/null || echo "no build log" > /tmp/log/build.log
+          cp site/index.json /tmp/log/ 2>/dev/null || true
+          printf 'run: %s\nsha: %s\nstatus: %s\npage_url: %s\n' \
+            "${{ github.run_id }}" "${{ github.sha }}" "$OUTCOME" "$PAGE_URL" > /tmp/log/run.txt
+          cd /tmp/log
+          git init -q -b build-log
+          git add -A
+          git -c user.name=github-actions -c user.email=github-actions@users.noreply.github.com commit -qm "Build log ${{ github.run_id }}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" build-log

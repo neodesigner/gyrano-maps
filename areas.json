@@ -1,0 +1,11 @@
+{
+  "maxzoom": 15,
+  "areas": [
+    { "id": "cork",      "name": "Cork",      "bbox": [-10.30, 51.38, -7.80, 52.42] },
+    { "id": "kerry",     "name": "Kerry",     "bbox": [-10.70, 51.68, -9.10, 52.62] },
+    { "id": "limerick",  "name": "Limerick",  "bbox": [-9.38, 52.28, -8.12, 52.72] },
+    { "id": "clare",     "name": "Clare",     "bbox": [-9.96, 52.53, -8.27, 53.18] },
+    { "id": "tipperary", "name": "Tipperary", "bbox": [-8.50, 52.19, -7.34, 53.18] },
+    { "id": "waterford", "name": "Waterford", "bbox": [-8.19, 51.93, -6.93, 52.37] }
+  ]
+}
