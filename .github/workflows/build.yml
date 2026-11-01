@@ -50,6 +50,17 @@ jobs:
           BUILD: ${{ inputs.build }}
         run: python3 build.py 2>&1 | tee build.log
 
+      - name: Test fixture (Cobh, for the app's tests)
+        run: |
+          B=$(python3 -c "import json;print(json.load(open('site/index.json'))['build'])")
+          pmtiles extract "https://build.protomaps.com/$B.pmtiles" /tmp/cobh.pmtiles --bbox=-8.335,51.838,-8.270,51.862 --maxzoom=15
+          ls -l /tmp/cobh.pmtiles
+          mkdir -p /tmp/fx && cd /tmp/fx && cp /tmp/cobh.pmtiles cobh.pmtiles
+          printf '{"build":"%s","bbox":[-8.335,51.838,-8.270,51.862],"maxzoom":15}\n' "$B" > cobh.json
+          git init -q -b fixture && git add -A
+          git -c user.name=github-actions -c user.email=github-actions@users.noreply.github.com commit -qm "Fixture $B"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" fixture
+
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
