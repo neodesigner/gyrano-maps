@@ -1,0 +1,262 @@
+[
+ {
+  "rel": 1629146,
+  "level": "4",
+  "name": "Açores",
+  "name_en": "Azores",
+  "ref": "PT-20",
+  "bbox": [
+   -31.2688,
+   36.9276,
+   -25.0132,
+   39.7262
+  ]
+ },
+ {
+  "rel": 1629145,
+  "level": "4",
+  "name": "Madeira",
+  "name_en": "Madeira",
+  "ref": "PT-30",
+  "bbox": [
+   -17.2659,
+   30.0288,
+   -15.8537,
+   33.1282
+  ]
+ },
+ {
+  "rel": 3920249,
+  "level": "6",
+  "name": "Aveiro",
+  "name_en": "Aveiro",
+  "ref": "PT-01",
+  "bbox": [
+   -8.784,
+   40.2788,
+   -8.0892,
+   41.0802
+  ]
+ },
+ {
+  "rel": 5134927,
+  "level": "6",
+  "name": "Beja",
+  "name_en": "Beja",
+  "ref": "PT-02",
+  "bbox": [
+   -8.8195,
+   37.3189,
+   -6.9315,
+   38.3311
+  ]
+ },
+ {
+  "rel": 3738284,
+  "level": "6",
+  "name": "Braga",
+  "name_en": "Braga",
+  "ref": "PT-03",
+  "bbox": [
+   -8.8116,
+   41.3188,
+   -7.8107,
+   41.8206
+  ]
+ },
+ {
+  "rel": 3905929,
+  "level": "6",
+  "name": "Bragança",
+  "name_en": "Bragança",
+  "ref": "PT-04",
+  "bbox": [
+   -7.4319,
+   41.0245,
+   -6.1892,
+   41.9925
+  ]
+ },
+ {
+  "rel": 4104644,
+  "level": "6",
+  "name": "Castelo Branco",
+  "name_en": "Castelo Branco",
+  "ref": "PT-05",
+  "bbox": [
+   -8.2931,
+   39.5374,
+   -6.8638,
+   40.4161
+  ]
+ },
+ {
+  "rel": 4875183,
+  "level": "6",
+  "name": "Coimbra",
+  "name_en": "Coimbra",
+  "ref": "PT-06",
+  "bbox": [
+   -8.9092,
+   39.9238,
+   -7.7318,
+   40.5204
+  ]
+ },
+ {
+  "rel": 1278415,
+  "level": "6",
+  "name": "Faro",
+  "name_en": "Faro",
+  "ref": "PT-08",
+  "bbox": [
+   -8.9971,
+   36.96,
+   -7.3949,
+   37.5291
+  ]
+ },
+ {
+  "rel": 3905924,
+  "level": "6",
+  "name": "Guarda",
+  "name_en": "Guarda",
+  "ref": "PT-09",
+  "bbox": [
+   -7.8492,
+   40.2299,
+   -6.781,
+   41.1794
+  ]
+ },
+ {
+  "rel": 5011694,
+  "level": "6",
+  "name": "Leiria",
+  "name_en": "Leiria",
+  "ref": "PT-10",
+  "bbox": [
+   -9.517,
+   39.2116,
+   -8.108,
+   40.0897
+  ]
+ },
+ {
+  "rel": 2897141,
+  "level": "6",
+  "name": "Lisboa",
+  "name_en": "Lisbon",
+  "ref": "PT-11",
+  "bbox": [
+   -9.5005,
+   38.6731,
+   -8.7819,
+   39.3177
+  ]
+ },
+ {
+  "rel": 5123448,
+  "level": "6",
+  "name": "Portalegre",
+  "name_en": "Portalegre",
+  "ref": "PT-12",
+  "bbox": [
+   -8.3439,
+   38.7515,
+   -6.9511,
+   39.6637
+  ]
+ },
+ {
+  "rel": 3459013,
+  "level": "6",
+  "name": "Porto",
+  "name_en": "Porto",
+  "ref": "PT-13",
+  "bbox": [
+   -8.7891,
+   41.0014,
+   -7.8756,
+   41.472
+  ]
+ },
+ {
+  "rel": 5122644,
+  "level": "6",
+  "name": "Santarém",
+  "name_en": "Santarém",
+  "ref": "PT-14",
+  "bbox": [
+   -9.0016,
+   38.7315,
+   -7.809,
+   39.8387
+  ]
+ },
+ {
+  "rel": 5143590,
+  "level": "6",
+  "name": "Setúbal",
+  "name_en": "Setúbal",
+  "ref": "PT-15",
+  "bbox": [
+   -9.263,
+   37.7494,
+   -8.1297,
+   38.8454
+  ]
+ },
+ {
+  "rel": 3898131,
+  "level": "6",
+  "name": "Viana do Castelo",
+  "name_en": "Viana do Castelo",
+  "ref": "PT-16",
+  "bbox": [
+   -8.881,
+   41.6064,
+   -8.0828,
+   42.1543
+  ]
+ },
+ {
+  "rel": 3967823,
+  "level": "6",
+  "name": "Vila Real",
+  "name_en": "Vila Real",
+  "ref": "PT-17",
+  "bbox": [
+   -8.1195,
+   41.1187,
+   -7.1706,
+   41.9271
+  ]
+ },
+ {
+  "rel": 3920285,
+  "level": "6",
+  "name": "Viseu",
+  "name_en": "Viseu",
+  "ref": "PT-18",
+  "bbox": [
+   -8.3594,
+   40.3226,
+   -7.3046,
+   41.2147
+  ]
+ },
+ {
+  "rel": 5130767,
+  "level": "6",
+  "name": "Évora",
+  "name_en": "Évora",
+  "ref": "PT-07",
+  "bbox": [
+   -8.6585,
+   38.1547,
+   -7.1068,
+   39.0269
+  ]
+ }
+]
