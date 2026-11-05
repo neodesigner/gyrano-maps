@@ -1,11 +1,97 @@
 {
-  "maxzoom": 15,
-  "areas": [
-    { "id": "cork",      "name": "Cork",      "bbox": [-10.28, 51.40, -7.82, 52.40] },
-    { "id": "kerry",     "name": "Kerry",     "bbox": [-10.70, 51.68, -9.05, 52.62] },
-    { "id": "limerick",  "name": "Limerick",  "bbox": [-9.42, 52.28, -8.10, 52.78] },
-    { "id": "clare",     "name": "Clare",     "bbox": [-9.96, 52.53, -8.27, 53.18] },
-    { "id": "tipperary", "name": "Tipperary", "bbox": [-8.52, 52.19, -7.33, 53.17] },
-    { "id": "waterford", "name": "Waterford", "bbox": [-8.20, 51.92, -6.92, 52.38] }
-  ]
+ "maxzoom": 15,
+ "countries": [
+  {
+   "id": "ie",
+   "name": "Ireland",
+   "areas": [
+    {
+     "id": "cork",
+     "name": "Cork",
+     "bbox": [
+      -10.28,
+      51.4,
+      -7.82,
+      52.4
+     ]
+    },
+    {
+     "id": "kerry",
+     "name": "Kerry",
+     "bbox": [
+      -10.7,
+      51.68,
+      -9.05,
+      52.62
+     ]
+    },
+    {
+     "id": "limerick",
+     "name": "Limerick",
+     "bbox": [
+      -9.42,
+      52.28,
+      -8.1,
+      52.78
+     ]
+    },
+    {
+     "id": "clare",
+     "name": "Clare",
+     "bbox": [
+      -9.96,
+      52.53,
+      -8.27,
+      53.18
+     ]
+    },
+    {
+     "id": "tipperary",
+     "name": "Tipperary",
+     "bbox": [
+      -8.52,
+      52.19,
+      -7.33,
+      53.17
+     ]
+    },
+    {
+     "id": "waterford",
+     "name": "Waterford",
+     "bbox": [
+      -8.2,
+      51.92,
+      -6.92,
+      52.38
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pt",
+   "name": "Portugal",
+   "areas": [
+    {
+     "id": "pt-lisboa",
+     "name": "Lisboa",
+     "bbox": [
+      -9.52,
+      38.65,
+      -8.76,
+      39.34
+     ]
+    },
+    {
+     "id": "pt-porto",
+     "name": "Porto",
+     "bbox": [
+      -8.81,
+      40.98,
+      -7.86,
+      41.49
+     ]
+    }
+   ]
+  }
+ ]
 }

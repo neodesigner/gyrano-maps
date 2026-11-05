@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Cut one PMTiles file per area out of the newest Protomaps basemap build.
 
+areas.json: { maxzoom, countries: [{ id, name, areas: [{ id, name, bbox }] }] } (the old flat
+{ areas } form still works and counts as Ireland).
+
 Writes site/<id>-<build>.pmtiles and site/index.json (the file the Gyrano app reads).
 Env:
   BUILD     Protomaps build date YYYYMMDD (blank = newest found in the last 14 days)
@@ -59,8 +62,13 @@ def main():
     print(f"Build {build} from {src}, maxzoom {maxzoom}", flush=True)
     os.makedirs(OUT, exist_ok=True)
 
+    countries = cfg.get("countries") or [{"id": "ie", "name": "Ireland", "areas": cfg["areas"]}]
+    todo = [(c, a) for c in countries for a in c["areas"]]
+    ids = [a["id"] for _, a in todo]
+    if len(ids) != len(set(ids)):
+        sys.exit("Duplicate area ids")
     areas = []
-    for a in cfg["areas"]:
+    for c, a in todo:
         w, s, e, n = a["bbox"]
         assert -180 <= w < e <= 180 and -90 <= s < n <= 90, a["id"]
         name = f"{a['id']}-{build}.pmtiles"
@@ -75,7 +83,7 @@ def main():
         if size >= 100_000_000:
             print(f"warning: {name} is {size} bytes (over 100 MB)", flush=True)
         areas.append({
-            "id": a["id"], "name": a["name"], "bbox": a["bbox"],
+            "id": a["id"], "name": a["name"], "country": c["id"], "bbox": a["bbox"],
             "minzoom": 0, "maxzoom": maxzoom,
             "bytes": size, "sha256": sha256(path), "file": name,
         })
@@ -88,12 +96,16 @@ def main():
         "source": "Protomaps basemap",
         "attribution": "© OpenStreetMap contributors",
         "license": "ODbL-1.0",
+        "countries": [{"id": c["id"], "name": c["name"]} for c in countries],
         "areas": areas,
     }
     with open(os.path.join(OUT, "index.json"), "w") as f:
         json.dump(index, f, indent=1, ensure_ascii=False)
     total = sum(a["bytes"] for a in areas)
     print(f"\nindex.json: {len(areas)} areas, {total / 1e6:.0f} MB in all", flush=True)
+    # GitHub Pages: a published site may be no larger than 1 GB.
+    if total > 980_000_000:
+        sys.exit(f"Site would be {total / 1e6:.0f} MB: over GitHub Pages' 1 GB")
 
 
 if __name__ == "__main__":
