@@ -1,0 +1,148 @@
+{
+ "version": 1,
+ "build": "20261104",
+ "generated": "2026-11-05T03:21:24Z",
+ "source": "Protomaps basemap",
+ "attribution": "© OpenStreetMap contributors",
+ "license": "ODbL-1.0",
+ "countries": [
+  {
+   "id": "ie",
+   "name": "Ireland"
+  },
+  {
+   "id": "pt",
+   "name": "Portugal"
+  }
+ ],
+ "areas": [
+  {
+   "id": "cork",
+   "name": "Cork",
+   "country": "ie",
+   "bbox": [
+    -10.28,
+    51.4,
+    -7.82,
+    52.4
+   ],
+   "minzoom": 0,
+   "maxzoom": 15,
+   "bytes": 70358503,
+   "sha256": "7792487fd9d44bcb8df36cdf9b3d6b0de1db5a1782cbb4963e6ba13940cd06f3",
+   "file": "cork-20261104.pmtiles"
+  },
+  {
+   "id": "kerry",
+   "name": "Kerry",
+   "country": "ie",
+   "bbox": [
+    -10.7,
+    51.68,
+    -9.05,
+    52.62
+   ],
+   "minzoom": 0,
+   "maxzoom": 15,
+   "bytes": 29354752,
+   "sha256": "e1346e7678272bdc5fe664bd6dd7d2e71d01355286d933af3d24576b15802721",
+   "file": "kerry-20261104.pmtiles"
+  },
+  {
+   "id": "limerick",
+   "name": "Limerick",
+   "country": "ie",
+   "bbox": [
+    -9.42,
+    52.28,
+    -8.1,
+    52.78
+   ],
+   "minzoom": 0,
+   "maxzoom": 15,
+   "bytes": 25503068,
+   "sha256": "361c0fb239de8da095668c1f928db7c68447341ff23f16bb8efefa8beed7c6e2",
+   "file": "limerick-20261104.pmtiles"
+  },
+  {
+   "id": "clare",
+   "name": "Clare",
+   "country": "ie",
+   "bbox": [
+    -9.96,
+    52.53,
+    -8.27,
+    53.18
+   ],
+   "minzoom": 0,
+   "maxzoom": 15,
+   "bytes": 31710863,
+   "sha256": "b3f9ea32fbc8598fea1d83a72fa1e3a52383c01661fdf202d9d4a39ab7a59020",
+   "file": "clare-20261104.pmtiles"
+  },
+  {
+   "id": "tipperary",
+   "name": "Tipperary",
+   "country": "ie",
+   "bbox": [
+    -8.52,
+    52.19,
+    -7.33,
+    53.17
+   ],
+   "minzoom": 0,
+   "maxzoom": 15,
+   "bytes": 40234632,
+   "sha256": "8b3572fae561f5d9345ab8661f126869b80c51b1cbe3f25b0c7bef17fafdd691",
+   "file": "tipperary-20261104.pmtiles"
+  },
+  {
+   "id": "waterford",
+   "name": "Waterford",
+   "country": "ie",
+   "bbox": [
+    -8.2,
+    51.92,
+    -6.92,
+    52.38
+   ],
+   "minzoom": 0,
+   "maxzoom": 15,
+   "bytes": 19032561,
+   "sha256": "c8ed128bd53af68e3ac0346967da18631f998aeede9c3cef3c2fe46b8f34f0d6",
+   "file": "waterford-20261104.pmtiles"
+  },
+  {
+   "id": "pt-lisboa",
+   "name": "Lisboa",
+   "country": "pt",
+   "bbox": [
+    -9.52,
+    38.65,
+    -8.76,
+    39.34
+   ],
+   "minzoom": 0,
+   "maxzoom": 15,
+   "bytes": 56508459,
+   "sha256": "5fd0407e99a251417c906c1009ebc3ba594c8aea4c8b66e104308ee05ba63d67",
+   "file": "pt-lisboa-20261104.pmtiles"
+  },
+  {
+   "id": "pt-porto",
+   "name": "Porto",
+   "country": "pt",
+   "bbox": [
+    -8.81,
+    40.98,
+    -7.86,
+    41.49
+   ],
+   "minzoom": 0,
+   "maxzoom": 15,
+   "bytes": 59762851,
+   "sha256": "6adb6f6546c0d5d7f6c36e10f20cd216fdc0c1fd7ed9403dbab83d10b097b78f",
+   "file": "pt-porto-20261104.pmtiles"
+  }
+ ]
+}
