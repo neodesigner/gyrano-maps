@@ -1,0 +1,69 @@
+# The Gyrano landing's demo map: one small extract (Great Island + Cork Harbour, demo.json)
+# cut from the newest Protomaps build and pushed to the branch `demo` (demo.pmtiles +
+# demo-meta.json with its build, box, size and sha256). The app bundles it as
+# public/app/demo/cobh.pmtiles. Not part of the Pages site; the areas are untouched.
+name: Demo map
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - demo.json
+      - .github/workflows/demo.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write    # demo branch
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262   # v4.4.0 (pinned by sha)
+
+      - name: Install pmtiles CLI
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PMTILES_TAG: v1.31.2
+          PMTILES_SHA256: 3ed7dbf4ec2e6dfe5e25b6f70d1ffc932729f93c86db353bf514dd71010a312f
+        run: |
+          mkdir -p /tmp/pmt && cd /tmp/pmt
+          gh release download "$PMTILES_TAG" --repo protomaps/go-pmtiles --pattern '*_Linux_x86_64.tar.gz' --output pmtiles.tgz
+          echo "$PMTILES_SHA256  pmtiles.tgz" | sha256sum -c -
+          tar -xzf pmtiles.tgz
+          sudo install "$(find . -name pmtiles -type f | head -1)" /usr/local/bin/pmtiles
+          pmtiles version
+
+      - name: Extract the demo area
+        run: |
+          set -euo pipefail
+          B=""
+          for i in $(seq 0 14); do
+            d=$(date -u -d "-$i day" +%Y%m%d)
+            if curl -sfI "https://build.protomaps.com/$d.pmtiles" > /dev/null; then B=$d; break; fi
+          done
+          test -n "$B" || { echo "No Protomaps build in the last 15 days" >&2; exit 1; }
+          BBOX=$(python3 -c "import json;print(','.join(str(v) for v in json.load(open('demo.json'))['bbox']))")
+          Z=$(python3 -c "import json;print(json.load(open('demo.json'))['maxzoom'])")
+          mkdir -p /tmp/demo
+          pmtiles extract "https://build.protomaps.com/$B.pmtiles" /tmp/demo/demo.pmtiles --bbox="$BBOX" --maxzoom="$Z" 2>&1 | tee /tmp/demo/extract.log
+          pmtiles show /tmp/demo/demo.pmtiles | tee -a /tmp/demo/extract.log
+          python3 - "$B" <<'PY'
+          import hashlib, json, os, sys
+          cfg = json.load(open('demo.json'))
+          p = '/tmp/demo/demo.pmtiles'
+          h = hashlib.sha256(open(p, 'rb').read()).hexdigest()
+          meta = {"build": sys.argv[1], "id": cfg["id"], "bbox": cfg["bbox"], "maxzoom": cfg["maxzoom"],
+                  "bytes": os.path.getsize(p), "sha256": h}
+          json.dump(meta, open('/tmp/demo/demo-meta.json', 'w'), indent=1)
+          print(meta)
+          if meta["bytes"] < 500_000: sys.exit("demo extract is suspiciously small")
+          PY
+
+      - name: Publish to the demo branch
+        run: |
+          cd /tmp/demo
+          git init -q -b demo && git add -A
+          git -c user.name=github-actions -c user.email=github-actions@users.noreply.github.com commit -qm "Demo map $(python3 -c "import json;print(json.load(open('demo-meta.json'))['build'])")"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" demo
