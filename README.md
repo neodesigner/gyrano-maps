@@ -5,6 +5,8 @@ Offline map areas for [Gyrano](https://gyrano.neodesigner.com): one PMTiles file
 - Areas: `areas.json` — `countries: [{ id, name, areas: [{ id, name, bbox }] }]` (bbox `[west, south, east, north]`) and the max zoom. `index.json` lists `countries` and gives each area its `country`. The build stops before publishing if the site would pass GitHub Pages' 1 GB (all 20 Portuguese areas alone are about 1 GB at zoom 15).
 - Region boxes: `regions/<country>.overpass` → `.github/workflows/regions.yml` → branch `regions` (OSM administrative boundaries' bounding boxes).
 - Build: `.github/workflows/build.yml` runs monthly, on demand, and when `areas.json` or `build.py` change. It extracts each area with `pmtiles extract`, writes `index.json` and deploys the site. The latest run's log and index go to the `build-log` branch.
+- Demo map (the Gyrano landing): `demo.json` (Great Island + Cork Harbour) → `.github/workflows/demo.yml` → branch `demo` (`demo.pmtiles`, `demo-meta.json`). Not on the Pages site; the app bundles it.
+- CI: actions are pinned by commit sha and go-pmtiles to one release with a known sha256 (`PMTILES_TAG` / `PMTILES_SHA256`); to move on, change both.
 - App entry point: `index.json` on the Pages site. Files are named `<id>-<build>.pmtiles`.
 
 ## Data and licence

@@ -33,14 +33,19 @@ jobs:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262   # v4.4.0 (pinned by sha)
 
+      # One go-pmtiles release, its tarball checked against a known sha256. To move on, change
+      # both (sha256sum of the new release's Linux x86_64 tarball).
       - name: Install pmtiles CLI
         env:
           GH_TOKEN: ${{ github.token }}
+          PMTILES_TAG: v1.31.2
+          PMTILES_SHA256: 3ed7dbf4ec2e6dfe5e25b6f70d1ffc932729f93c86db353bf514dd71010a312f
         run: |
           mkdir -p /tmp/pmt && cd /tmp/pmt
-          gh release download --repo protomaps/go-pmtiles --pattern '*_Linux_x86_64.tar.gz' --output pmtiles.tgz
+          gh release download "$PMTILES_TAG" --repo protomaps/go-pmtiles --pattern '*_Linux_x86_64.tar.gz' --output pmtiles.tgz
+          echo "$PMTILES_SHA256  pmtiles.tgz" | sha256sum -c -
           tar -xzf pmtiles.tgz
           sudo install "$(find . -name pmtiles -type f | head -1)" /usr/local/bin/pmtiles
           pmtiles version
@@ -61,14 +66,14 @@ jobs:
           git -c user.name=github-actions -c user.email=github-actions@users.noreply.github.com commit -qm "Fixture $B"
           git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" fixture
 
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b   # v5.0.0
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa   # v3.0.1
         with:
           path: site
 
       - id: deploy
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e   # v4.0.5
 
       - name: Publish build log
         if: always()
